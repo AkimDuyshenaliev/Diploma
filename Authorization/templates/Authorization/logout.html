@@ -1,0 +1,12 @@
+{% extends "Authorization/base.html" %}
+
+{% block content %}
+    <div class="container content-section bg-secondary">
+        <h1>Вы вышли из аккаунта!</h1>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+            Войти обратно в аккаунт? <a href="{% url 'login' %}">Войти</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}

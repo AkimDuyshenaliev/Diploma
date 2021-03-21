@@ -1,0 +1,22 @@
+{% extends "Authorization/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container content-section bg-secondary boxshadow">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Войти в аккаунт.</legend>
+                {{ form|crispy }}
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Войти</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+            Еще нет аккаунта? <a class="ml-2" href="{% url 'register' %}">Зарегистрироваться</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}

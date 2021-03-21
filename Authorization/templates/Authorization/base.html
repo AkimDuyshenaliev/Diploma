@@ -1,0 +1,151 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    
+<!-- Bootstrap styles -->
+    <link rel="stylesheet" href="{% static 'Authorization/css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Authorization/css/custom-classes.css' %}" type="text/css">
+
+</head>
+<body>
+
+<!-- Start navbar -->
+<nav class="navbar navbar-light bg-faded justify-content-between flex-nowrap flex-row bottomshadow">
+    <div class="container w-100">
+        <a href="/" class="navbar-brand float-left">Главная</a>
+        <ul class="nav navbar-nav flex-row float-left">
+            <li class="nav-item"><a class="nav-link pr-3" href="{% url 'allUsers' %}">Все пользователи</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'allSubjects' %}">Все предметы</a></li>
+            <li class="nav-item pl-5">
+            <form method="GET" class="form-inline my-2 my-lg-0" action="{% url 'search' %}">
+                <input class="form-control mr-sm-2" type="search" name="search" aria-label="Search">
+                <button class="btn btn-outline-body my-2 my-sm-0" type="submit">Найти</button>
+            </form>
+            </li>
+            
+        </ul>
+        <ul class="nav navbar-nav flex-row float-right">
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link pr-3" href="{% url 'profile' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+                <li class="nav-item"><a class="nav-link pr-3" href="{% url 'logout' %}">Выйти</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link pr-3" href="{% url 'login' %}">Войти</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Зарегистрироваться</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<!-- End navbar -->
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+<br>
+
+{% if search %}
+    {% if result %}
+        <div class="container">
+            <ul>
+                {% for item in result %}
+                    <li><a href="#">{{ item }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="container text-center">
+            <p>Не удалось ничего найти по запросу "{{ search }}"</p>
+        </div>
+    {% endif %}
+{% else %}
+
+{% endif %}
+
+<!-- Start block -->
+    {% block content %}    {% endblock %}
+<!-- End block -->
+
+<!-- Footer -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<section class="footers bg-light pt-1 pb-3">
+<hr>
+   <div class="container pt-5">
+       <div class="row">
+           <div class="col-xs-12 col-sm-6 col-md-4 footers-one">
+    		    <div class="footers-logo">
+                    <h4>Здесь будет лого</h4>
+    		        <!-- <img src="" alt="Logo" style="width:120px;"> -->
+    		    </div>
+    		    <div class="footers-info mt-3">
+    		        <p>Cras sociis natoque penatibus et magnis Lorem Ipsum tells about the compmany right now the best.</p>
+    		    </div>
+    		    <div class="social-icons">
+                <a href="https://www.facebook.com/"><i id="social-fb" class="fa fa-facebook-square fa-2x social"></i></a>
+                <a href="https://twitter.com/"><i id="social-tw" class="fa fa-twitter-square fa-2x social"></i></a>
+	            <a href="https://plus.google.com/"><i id="social-gp" class="fa fa-google-plus-square fa-2x social"></i></a>
+	            <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-2x social"></i></a>
+	        </div>
+    		</div>
+    	   <div class="col-xs-12 col-sm-6 col-md-2 footers-two">
+    		    <h5>Главное</h5>
+    		    <ul class="list-unstyled">
+                    <li><a href="#">Искать</a></li>
+    			</ul>
+    		</div>
+    	   <div class="col-xs-12 col-sm-6 col-md-2 footers-three">
+    		    <h5>Информация</h5>
+    		    <ul class="list-unstyled">
+                    {% if user.is_authenticated %}
+                    {% else %}
+                        <li><a href="{% url 'register' %}">Зарегистрироваться</a></li>
+                    {% endif %}
+                    <li><a href="#">Инструкция</a></li>
+                    <li><a href="#">О нас</a></li>
+                </ul>
+    		</div>
+    	   <div class="col-xs-12 col-sm-6 col-md-2 footers-four">
+    		    <h5>Исследуйте</h5>
+    		    <ul class="list-unstyled">
+                    <li><a href="#">Обратная связь</a></li>
+                    <li><a href="#">Пользовательское соглашение</a></li>
+    			</ul>
+    		</div>
+    	   <div class="col-xs-12 col-sm-6 col-md-2 footers-five">
+    		    <h5>Компания</h5>
+    		    <ul class="list-unstyled">
+                    <li><a href="#">Условия пользования</a></li>
+                    <li><a href="#">Соглашение</a></li>
+    			</ul>
+    		</div>
+
+       </div>
+   </div>
+</section>
+<section class="copyright border">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12 pt-3">
+                <p class="text-muted">© 2020 Что-то что-то, я один человек но тут может что то быть.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer end -->
+
+<!-- Bootstrap scripts -->
+	<script src="{% static 'Authorization/js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static 'Authorization/js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>

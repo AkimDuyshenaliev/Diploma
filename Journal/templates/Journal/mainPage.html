@@ -1,0 +1,22 @@
+{% extends 'Authorization/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container w-75 boxshadow px-0 pb-3">
+    <h1 class="text-center">Это главная страница</h1>
+    <hr>
+    <div class="row">
+    {% for grade, groups, groupsSlugifyed in mainPageInfo %}
+        <div class="col">
+            <h3><a class="ml-4" href="#">{{ grade }}</a><br></h3>
+            {% for group in groupsSlugifyed %}
+                <a class="ml-4 text-uppercase" href="{% url 'Journal:GroupPage' group_slug=group %}">{{ group }}</a><br>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

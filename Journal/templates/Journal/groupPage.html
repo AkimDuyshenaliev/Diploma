@@ -1,0 +1,29 @@
+{% extends 'Authorization/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container w-75 boxshadow px-0 pb-3">
+    <h1 class="text-center">Это страница группы {{ title }}</h1>
+
+<hr>
+
+    <div class="row">
+        <div class="col ml-4">
+            <h3>Список предметов группы {{ title }}</h3>
+            {% for subject, subjectNamesSlugged in subjects %}
+                <a href="{% url 'Journal:JournalPage' group_slug=title subject=subjectNamesSlugged %}">{{ subject }}</a><br/>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3>Здесь список студентов этой группы</h3>
+            {% for user in userNames %}
+                <a href="#">{{ user }}</a><br/>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

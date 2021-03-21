@@ -1,0 +1,82 @@
+{% extends 'Authorization/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="container table-responsive boxshadow px-0">
+            <div class="container">
+                <h1 class="text-center mt-3"><a href="{% url 'Journal:GroupPage' group_slug=group %}">Группа: {{ group }}</a></h1>
+                <h1 class="text-center mb-3">Предмет: {{ subject }}</h1>
+            </div>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th class="w-0 text-center align-middle" rowspan="2">№</th>
+                    <th class="w-25 text-center align-middle h-100" rowspan="2">ФИО</th>
+                    <th class="w-75 text-center align-middle" colspan="100">
+                        Рабочая область
+                        <button class="btn btn-outline-dark float-right mr-5" type="submit" form="gradebook" name="submit">Сохранить</button>
+                    </th>
+                </tr>
+                <form id="gradebook" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <tr class="text-center align-middle">
+                        {% for date in userMarkDates %}
+                            <td><input class="form-control" id="date" type="date" name="date_{{ forloop.counter }}" value="{{ date }}"/></td>
+                        {% endfor %}
+                        <td><input class="form-control" id="date" type="date" name="date" value="{{ today }}"/></td>
+                    </tr>
+                {% for id, name, marks in student %}
+                    <tr class="text-center align-middle">
+                        <td>{{ forloop.counter }}</td>
+                        <td class="text-left">{{ name }}</td>
+                        {% for mark in marks %}
+                            <td><input class="form-control" id="{{ id }}" type="text" name="User_{{ name }}_loopcounter_{{ forloop.counter }}_mark_{{ mark }}" value="{{ mark }}" autocomplete="off"/></td>
+                        {% endfor %}
+                        <td><input class="form-control" id="{{ id }}" type="text" name="{{ name }}" autocomplete="off"/></td>
+                    </tr>
+                {% endfor %}
+                </form>
+            </table>
+
+        </div>
+    {% else %}
+        <div class="container table-responsive boxshadow px-0">
+            <div class="container">
+                <h1 class="text-center mt-3"><a href="{% url 'Journal:GroupPage' group_slug=group %}">Группа: {{ group }}</a></h1>
+                <h1 class="text-center mb-3">Предмет: {{ subject }}</h1>
+            </div>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th class="w-0 text-center align-middle" rowspan="2">№</th>
+                    <th class="w-25 text-center align-middle h-100" rowspan="2">ФИО</th>
+                    <th class="w-75 text-center align-middle" colspan="100">
+                        Рабочая область
+                    </th>
+                </tr>
+                <form id="gradebook" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <tr class="text-center align-middle">
+                        {% for date in userMarkDates %}
+                            <td><input class="form-control" id="date" type="date" name="date_{{ forloop.counter }}" value="{{ date }}"/></td>
+                        {% endfor %}
+                        <td><input class="form-control" id="date" type="date" name="date" value="{{ today }}"/></td>
+                    </tr>
+                {% for id, name, marks in student %}
+                    <tr class="text-center align-middle">
+                        <td>{{ forloop.counter }}</td>
+                        <td class="text-left">{{ name }}</td>
+                        {% for mark in marks %}
+                            <td><input class="form-control" id="{{ id }}" type="text" name="User_{{ name }}_loopcounter_{{ forloop.counter }}_mark_{{ mark }}" value="{{ mark }}" autocomplete="off" disabled/></td>
+                        {% endfor %}
+                        <td><input class="form-control" id="{{ id }}" type="text" name="{{ name }}" autocomplete="off" disabled/></td>
+                    </tr>
+                {% endfor %}
+                </form>
+            </table>
+
+        </div>
+    {% endif %}
+
+{% endblock %}

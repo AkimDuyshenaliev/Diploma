@@ -1,0 +1,17 @@
+{% extends "Authorization/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container content-section bg-secondary shadow-sm boxshadow px-0">
+
+    <h1 class="text-center my-3">Список всех предметов</h1>
+
+    <table class="table table-bordered">
+        {% for subject in subjects %}
+            <tr>
+                <th>{{ subject }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

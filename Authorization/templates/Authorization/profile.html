@@ -1,0 +1,40 @@
+{% extends "Authorization/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container boxshadow p-0">
+        <h1 class="text-center py-3">{{ user.first_name }} {{ user.last_name }}</h1>
+
+        <div class="container p-0">
+            <table class="table table-bordered">
+                <tr>
+                    <td>Имя</td>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Фамилия</td>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Группа</td>
+                    <td><a href="{% url 'Journal:GroupPage' group_slug=userGroup %}">{{ userGroup }}</a></td>
+                </tr>
+                <tr>
+                    <td>Курс</td>
+                    <td>{{ userGrade }}</td>
+                </tr>
+                {% for subject in userSubjectList %}
+                    <tr>
+                        {% if forloop.counter == 1 %}
+                            <td class="align-middle" rowspan="{{ userSubjectList|length }}">Предметы</td>
+                            <td>{{ subject }}</td>
+                        {% else %}
+                            <td>{{ subject }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+    </div>
+{% endblock content %}

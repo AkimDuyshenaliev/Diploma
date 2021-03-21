@@ -1,0 +1,24 @@
+{% extends "Authorization/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container table-responsive content-section bg-secondary shadow-sm boxshadow">
+
+    <h1 class="text-center my-3">Список всех пользователей</h1>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>ФИО</th>
+            <th>Группа</th>
+            <th>Курс</th>
+        </tr>
+        {% for user, group, grade in usersInfo %}
+            <tr>
+                <th>{{ user }}</th>
+                <th><a href="{% url 'Journal:GroupPage' group_slug=group %}">{{ group }}</a></th>
+                <th>{{ grade }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}
