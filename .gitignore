@@ -134,5 +134,5 @@ staticfiles/
 .vscode
 
 # documents
-.docx
-.pdf
+*.docx
+*.pdf
